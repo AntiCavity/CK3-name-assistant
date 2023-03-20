@@ -1,12 +1,20 @@
 import openai
+import creds
 
-API_KEY = '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'
-openai.api_key = API_KEY
+openai.api_key = creds.API_KEY
 
 model = 'text-davinci-003'
 
+language = input('What language does your character speak? ')
+
+location = input('What location do you wish to rename? ')
+
+prompt = 'How would someone who speaks %s pronounce and spell %s using the latin alphabet?' %(language, location)
+
+#print(prompt)
+
 response = openai.Completion.create(
-    prompt='How would someone who speaks Arabic pronounce and spell Rome using the latin alphabet',
+    prompt=prompt,
     model=model,
     max_tokens=1000,
     temperature=0,
