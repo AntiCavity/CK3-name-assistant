@@ -16,17 +16,22 @@ def flavorize():
 
     prompt = 'How would someone who speaks %s pronounce and spell %s using the latin alphabet?' %(language, location)
 
-
-    response = openai.Completion.create(
-        prompt=prompt,
-        model=model,
-        max_tokens=1000,
-        temperature=0.8,
+    if language or location == '':
+        retLabel.configure(text="Please fill out both entries")
     
-    )
 
-    for result in response.choices:
-        retLabel.configure(text=result.text)
+    else:
+        response = openai.Completion.create(
+            prompt=prompt,
+            model=model,
+            max_tokens=1000,
+            temperature=0.8,
+    
+        )
+
+
+        for result in response.choices:
+            retLabel.configure(text=result.text)
 
 '''Here is the frontend'''
 
@@ -44,7 +49,7 @@ frame.pack(pady=20, padx=60, fill="both", expand=True)
 label=customtkinter.CTkLabel(master=frame, text="CK3 Name Assistant", font = ("Roboto", 24))
 label.pack(pady=12,padx=10)
 
-provinceAns = customtkinter.CTkEntry(master=frame, placeholder_text="Province Name")
+provinceAns = customtkinter.CTkEntry(master=frame, placeholder_text="Location")
 provinceAns.pack(pady=12,padx=10)
 
 langAns = customtkinter.CTkEntry(master=frame, placeholder_text="Language") 
